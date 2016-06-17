@@ -3,7 +3,7 @@ Vagrant.require_version '>= 1.5.0'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'myface-berkshelf'
   if Vagrant.has_plugin?("vagrant-omnibus")
-    config.omnibus.chef_version = 'latest'
+    config.omnibus.chef_version = '12.10.24'
   end
 
   # Don't keep reinstalling virtualbox guest additions, it takes too
@@ -16,6 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'bento/ubuntu-14.04'
   config.vm.network :private_network, type: 'dhcp'
   config.vm.provision :chef_solo do |chef|
+    chef.version = '12.10.24'
     chef.json = {
       mysql: {
         server_root_password: 'rootpass',
