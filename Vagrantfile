@@ -6,6 +6,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.omnibus.chef_version = 'latest'
   end
 
+  # Don't keep reinstalling virtualbox guest additions, it takes too
+  # much time
+  # vagrant plugin install vagrant-omnibus
+  if Vagrant.has_plugin?('vagrant-vbguest')
+    config.vbguest.auto_update = false
+  end
+
   config.vm.box = 'bento/ubuntu-14.04'
   config.vm.network :private_network, type: 'dhcp'
   config.vm.provision :chef_solo do |chef|
