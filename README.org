@@ -2,12 +2,77 @@
 
 http://misheska.com/blog/2013/06/16/getting-started-writing-chef-cookbooks-the-berkshelf-way/#getting-started
 
+** 
+
+chef_zero requires
+    chef.cookbooks_path = ...something...
+    chef.nodes_path = "./nodes"
+
+but when I do 
+
+echo | berks cookbook chef-practice-myface
+
+I don't get a cookbooks directory, so is it enough 
+
+    chef.cookbooks_path = ...something...
+
+
+
+
+
+
+
+
+
+  config.vm.provision :chef_zero do |chef|
+    chef.cookbooks_path = "."
+    chef.nodes_path = "./nodes"
+    chef.version = '12.10.24'
+    chef.json = {
+      mysql: {
+        server_root_password: 'rootpass',
+        server_debian_password: 'debpass',
+        server_repl_password: 'replpass'
+      }
+    }
+    chef.run_list = [
+      'recipe[myface::default]'
+    ]
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ** try chef_zero provisioner instead of chef_solo
+
+must do 
+
+
+mkdir -p nodes
+
+
+
 
 https://www.vagrantup.com/docs/provisioning/chef_zero.html
 
 chef_zero provisioner requires nodes_path
 https://github.com/mitchellh/vagrant/issues/6972
+
+vagrant chef_zero nodes_path
+
+
+
+
 
 
 
