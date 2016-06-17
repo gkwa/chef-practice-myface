@@ -2,6 +2,209 @@
 
 http://misheska.com/blog/2013/06/16/getting-started-writing-chef-cookbooks-the-berkshelf-way/#getting-started
 
+** 
+
+chef_server_url "chefzero://localhost:8889"
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ vagrant destroy -f; vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete' | sh -x ; vagrant up
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'bento/ubuntu-14.04'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'bento/ubuntu-14.04' is up to date...
+==> default: Setting the name of the VM: chef-practice-myface_default_1466189997503_35671
+==> default: Auto-generating node name for Chef...
+==> default: The cookbook path '/root/pdev/tmp/chef-practice-myface/cookbooks' doesn't exist. Ignoring...
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+    default: Adapter 2: hostonly
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default:
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if it's present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+    default: The guest additions on this VM do not match the installed version of
+    default: VirtualBox! In most cases this is fine, but in rare cases it can
+    default: prevent things such as shared folders from working properly. If you see
+    default: shared folder errors, please make sure the guest additions within the
+    default: virtual machine match the version of VirtualBox you have installed on
+    default: your host and reload your VM.
+    default:
+    default: Guest Additions Version: 5.0.20
+    default: VirtualBox Version: 4.3
+==> default: Setting hostname...
+==> default: Configuring and enabling network interfaces...
+==> default: Mounting shared folders...
+    default: /vagrant => /root/pdev/tmp/chef-practice-myface
+==> default: Installing Chef 12.11.18 Omnibus package...
+==> default: ubuntu 14.04 x86_64
+==> default: Getting information for chef stable 12.11.18 for ubuntu...
+==> default: downloading https://omnitruck-direct.chef.io/stable/chef/metadata?v=12.11.18&p=ubuntu&pv=14.04&m=x86_64
+==> default:   to file /tmp/install.sh.1576/metadata.txt
+==> default: trying wget...
+==> default: sha1       bc4a6642d6093b54de856da31f0651a56b0fdc8e
+==> default: sha256     f1cf5d0f6dd12d2d2296ec6d8dbb16363f8541f5c15298cafa70e65ff2b5a22f
+==> default: url        https://packages.chef.io/stable/ubuntu/14.04/chef_12.11.18-1_amd64.deb
+==> default: version    12.11.18
+
+==> default: downloaded metadata file looks valid...
+==> default: downloading https://packages.chef.io/stable/ubuntu/14.04/chef_12.11.18-1_amd64.deb
+==> default:   to file /tmp/install.sh.1576/chef_12.11.18-1_amd64.deb
+==> default: trying wget...
+==> default: Comparing checksum with sha256sum...
+==> default: Installing chef 12.11.18
+==> default: installing with dpkg...
+==> default: Selecting previously unselected package chef.
+==> default: (Reading database ... 32948 files and directories currently installed.)
+==> default: Preparing to unpack .../chef_12.11.18-1_amd64.deb ...
+==> default: Unpacking chef (12.11.18-1) ...
+==> default: Setting up chef (12.11.18-1) ...
+==> default: Thank you for installing Chef!
+==> default: Running provisioner: chef_solo...
+==> default: Detected Chef (latest) is already installed
+==> default: Generating chef JSON and uploading...
+==> default: Running chef-solo...
+==> default: stdin: is not a tty
+==> default: [2016-06-17T19:01:15+00:00] INFO: Started chef-zero at chefzero://localhost:8889 with repository at /tmp/vagrant-chef
+==> default:   One version per cookbook
+==> default: [2016-06-17T19:01:15+00:00] INFO: Forking chef instance to converge...
+==> default: Starting Chef Client, version 12.11.18
+==> default: [2016-06-17T19:01:15+00:00] INFO: *** Chef 12.11.18 ***
+==> default: [2016-06-17T19:01:15+00:00] INFO: Platform: x86_64-linux
+==> default: [2016-06-17T19:01:15+00:00] INFO: Chef-client pid: 1742
+==> default: [2016-06-17T19:01:17+00:00] INFO: GET /organizations/chef/nodes/vagrant-6b4df8ae
+==> default: [2016-06-17T19:01:17+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/vagrant-6b4df8ae>
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:83:in `get_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:305:in `block in send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:336:in `block in retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:299:in `send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:144:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:111:in `get'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:604:in `load'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:588:in `find_or_create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:467:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:269:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:286:in `block in fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:239:in `block in run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:227:in `run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:456:in `sleep_then_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:443:in `block in interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:426:in `run_application'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:59:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/solo.rb:217:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/bin/chef-solo:25:in `<top (required)>'
+==> default: /usr/bin/chef-solo:52:in `load'
+==> default: /usr/bin/chef-solo:52:in `<main>'
+==> default: [2016-06-17T19:01:17+00:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/vagrant-6b4df8ae
+==> default: [2016-06-17T19:01:17+00:00] INFO: POST /organizations/chef/nodes
+==> default: --- POST BODY ---
+==> default: {"name":"vagrant-6b4df8ae","chef_environment":"_default","json_class":"Chef::Node","automatic":{},"normal":{},"chef_type":"node","default":{},"override":{},"run_list":[]}
+==> default: --- END POST BODY ---
+==> default: [2016-06-17T19:01:17+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Parent not found: chefzero://localhost:8889/nodes>
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:187:in `rescue in create_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:181:in `create_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_list_endpoint.rb:31:in `post'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/nodes_endpoint.rb:24:in `post'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:305:in `block in send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:336:in `block in retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:299:in `send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:144:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:127:in `post'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:639:in `create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:592:in `rescue in find_or_create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:588:in `find_or_create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:467:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:269:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:286:in `block in fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:239:in `block in run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:227:in `run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:456:in `sleep_then_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:443:in `block in interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:426:in `run_application'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:59:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/solo.rb:217:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/bin/chef-solo:25:in `<top (required)>'
+==> default: /usr/bin/chef-solo:52:in `load'
+==> default: /usr/bin/chef-solo:52:in `<main>'
+==> default: [2016-06-17T19:01:17+00:00] INFO: HTTP Request Returned 404 Not Found: Parent not found: chefzero://localhost:8889/nodes
+==> default:
+==> default: ================================================================================
+==> default: Chef encountered an error attempting to load the node data for "vagrant-6b4df8ae"
+==> default: ================================================================================
+==> default:
+==> default: Resource Not Found:
+==> default: -------------------
+==> default: The server returned a HTTP 404. This usually indicates that your chef_server_url is incorrect.
+==> default:
+==> default: Relevant Config Settings:
+==> default: -------------------------
+==> default: chef_server_url "chefzero://localhost:8889"
+==> default:
+==> default: Platform:
+==> default: ---------
+==> default: x86_64-linux
+==> default:
+==> default:
+==> default: Running handlers:
+==> default: [2016-06-17T19:01:17+00:00] ERROR: Running exception handlers
+==> default: Running handlers complete
+==> default: [2016-06-17T19:01:17+00:00] ERROR: Exception handlers complete
+==> default: Chef Client failed. 0 resources updated in 02 seconds
+==> default: [2016-06-17T19:01:17+00:00] FATAL: Stacktrace dumped to /var/chef/cache/chef-stacktrace.out
+==> default: [2016-06-17T19:01:17+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+==> default: [2016-06-17T19:01:17+00:00] ERROR: 404 "Not Found"
+==> default: [2016-06-17T19:01:19+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+Chef never successfully completed! Any errors should be visible in the
+output above. Please fix your recipes so that they properly complete.
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$
+
 ** the "vboxsf" file system is not available. Please verify that
 
 workaround don't try to upgrade virtualbox guest addtions
