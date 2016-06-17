@@ -2,7 +2,6 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.require_version '>= 1.5.0'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'myface-berkshelf'
-  config.berkshelf.enabled = true
   if Vagrant.has_plugin?("vagrant-omnibus")
     config.omnibus.chef_version = '12.10.24'
   end
@@ -26,11 +25,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.cache.enable :gem
   end
 
-
-
-
   config.vm.box = 'bento/ubuntu-14.04'
   config.vm.network :private_network, type: 'dhcp'
+  config.berkshelf.enabled = true
   config.vm.provision :chef_zero do |chef|
     chef.cookbooks_path = Dir.pwd
     chef.nodes_path = "./nodes"

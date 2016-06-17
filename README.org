@@ -2,6 +2,50 @@
 
 http://misheska.com/blog/2013/06/16/getting-started-writing-chef-cookbooks-the-berkshelf-way/#getting-started
 
+** Vagrant: * Unknown configuration section 'berkshelf'.
+
+vagrant plugin install vagrant-berkshelf
+
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+There are errors in the configuration of this machine. Please fix
+the following errors and try again:
+
+Vagrant:
+ * Unknown configuration section 'berkshelf'.
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ chef -v
+Chef Development Kit Version: 0.13.21
+chef-client version: 12.9.41
+berks version: 4.3.2
+kitchen version: 1.7.3
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$
+
+** try uninstalling chefdk and re-installing with pinned release version
+
+***
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ dpkg -P chefdk
+(Reading database ... 119972 files and directories currently installed.)
+Removing chefdk (0.15.11-1) ...
+Purging configuration files for chefdk (0.15.11-1) ...
+dpkg: warning: while removing chefdk, directory '/opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems' not empty so not removed
+dpkg: warning: while removing chefdk, directory '/opt/chefdk/embedded/lib/ruby/gems/2.1.0/cache' not empty so not removed
+dpkg: warning: while removing chefdk, directory '/opt/chefdk/embedded/lib/ruby/gems/2.1.0/specifications' not empty so not removed
+[root@ub4:~/pdev/tmp/chef-practice-myface]$ rm -rf /opt/chefdk/embedded/lib/ruby/gems/
+[root@ub4:~/pdev/tmp/chef-practice-myface]$ mkdir -p cookbooks nodes
+[root@ub4:~/pdev/tmp/chef-practice-myface]$ dpkg -P chefdk
+dpkg: warning: ignoring request to remove chefdk which isn't installed
+[root@ub4:~/pdev/tmp/chef-practice-myface]$
+[root@ub4:~/pdev/tmp/chef-practice-myface]$
+
+** uninstall chefdk
+
+dpkg -P chefdk
+
 ** 
 
 chef_zero requires
@@ -39,19 +83,6 @@ I don't get a cookbooks directory, so is it enough
       'recipe[myface::default]'
     ]
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ** try chef_zero provisioner instead of chef_solo
 
@@ -933,9 +964,50 @@ Bringing machine 'default' up with 'virtualbox' provider...
     default: SSH auth method: private key
 
 * On MBP
-
 ** error
-*** this is the fix
+*** try upgrading vagrant
+
+Based off recomendation:
+https://github.com/berkshelf/vagrant-berkshelf/issues/256#issuecomment-70272986
+
+curl -LO -sS https://releases.hashicorp.com/vagrant/1.8.4/vagrant_1.8.4_x86_64.deb
+
+***
+
+Googling
+berks version format json can't find gem berkshelf Gem::GemNotFoundException
+
+stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)
+/opt/chefdk/embedded/bin/berks --version --format json
+
+*** this still happens with chefdk 0.14.25
+
+curl https://omnitruck.chef.io/install.sh | bash -s -- -c 0.14.25 -P chefdk
+
+**** log
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+The following berks command failed to execute:
+
+    /opt/chefdk/embedded/bin/berks --version --format json
+
+The stdout and stderr are shown below:
+
+    stdout:
+    stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)
+        from /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:278:in `activate_bin_path'
+        from /opt/chefdk/embedded/bin/berks:22:in `<main>'
+
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ chef --version
+Chef Development Kit Version: 0.14.25
+chef-client version: 12.10.24
+berks version: 4.3.3
+kitchen version: 1.8.0
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$
+
+*** this is the workaround
 
 [demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ g sc @~1
 commit 1fec931
@@ -988,6 +1060,8 @@ The stdout and stderr are shown below:
 
 ** 
 
+can't find gem berkshelf activate_bin_path
+can't find gem berkshelf activate_bin_path
 can't find gem berkshelf Gem::GemNotFoundException
 can't find gem berkshelf activate_bin_path
 
