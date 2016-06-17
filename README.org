@@ -1,0 +1,619 @@
+* following along here
+
+http://misheska.com/blog/2013/06/16/getting-started-writing-chef-cookbooks-the-berkshelf-way/#getting-started
+
+* On MBP
+** 
+
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ vagrant plugin list
+vagrant-aws (0.7.0)
+vagrant-berkshelf (4.1.0)
+vagrant-cachier (1.2.1)
+vagrant-host-shell (0.0.4)
+vagrant-omnibus (1.4.1)
+vagrant-scp (0.5.7)
+vagrant-share (1.1.5, system)
+vagrant-vbguest (0.11.0)
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ 
+
+** 
+
+cd '/Users/demo/pdev/tmp/myface/'
+which gem bundle
+export PATH=/opt/chefdk/embedded/bin:$PATH
+which gem bundle
+bundle install
+vagrant up
+
+** 
+
+docker-machine rm --force default
+vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete'
+
+==> default: INFO: HTTP Request Returned 404 Not Found: Parent not found: chefzero://localhost:8889/nodes
+
+#+BEGIN_SRC 
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ vagrant up
+vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Loading Berkshelf datafile...
+==> default: Sharing cookbooks with VM
+==> default: Checking if box 'bento/ubuntu-14.04' is up to date...
+==> default: Updating Vagrant's Berkshelf...
+==> default: Resolving cookbook dependencies...
+==> default: Fetching 'myface' from source at .
+==> default: Using myface (0.1.0) from source at .
+==> default: Vendoring myface (0.1.0) to /Users/demo/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-28642-1bcuh2j-default/myface
+==> default: Auto-generating node name for Chef...
+==> default: Fixed port collision for 22 => 2222. Now on port 2200.
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+    default: Adapter 2: hostonly
+==> default: Forwarding ports...
+    default: 22 (guest) => 2200 (host) (adapter 1)
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2200
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Remote connection disconnect. Retrying...
+    default: 
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default: 
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if it's present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> default: Machine booted and ready!
+GuestAdditions 5.0.20 running --- OK.
+==> default: Checking for guest additions in VM...
+==> default: Setting hostname...
+==> default: Configuring and enabling network interfaces...
+==> default: Mounting shared folders...
+    default: /vagrant => /Users/demo/pdev/tmp/myface
+    default: /tmp/vagrant-cache => /Users/demo/.vagrant.d/cache/bento/ubuntu-14.04
+    default: /tmp/vagrant-chef/21ffe8cc64f1e650e69e1560eb788fa1/cookbooks => /Users/demo/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-28642-1bcuh2j-default
+==> default: Installing Chef 12.11.18 Omnibus package...
+==> default: ubuntu 14.04 x86_64
+==> default: Getting information for chef stable 12.11.18 for ubuntu...
+==> default: downloading https://omnitruck-direct.chef.io/stable/chef/metadata?v=12.11.18&p=ubuntu&pv=14.04&m=x86_64
+==> default:   to file /tmp/install.sh.1687/metadata.txt
+==> default: trying wget...
+==> default: sha1	bc4a6642d6093b54de856da31f0651a56b0fdc8e
+==> default: sha256	f1cf5d0f6dd12d2d2296ec6d8dbb16363f8541f5c15298cafa70e65ff2b5a22f
+==> default: url	https://packages.chef.io/stable/ubuntu/14.04/chef_12.11.18-1_amd64.deb
+==> default: version	12.11.18
+
+==> default: downloaded metadata file looks valid...
+==> default: /tmp/vagrant-cache/vagrant_omnibus/chef_12.11.18-1_amd64.deb already exists, verifiying checksum...
+==> default: Comparing checksum with sha256sum...
+==> default: checksum compare succeeded, using existing file!
+==> default: Installing chef 12.11.18
+==> default: installing with dpkg...
+==> default: Selecting previously unselected package chef.
+==> default: (Reading database ... 32948 files and directories currently installed.)
+==> default: Preparing to unpack .../chef_12.11.18-1_amd64.deb ...
+==> default: Unpacking chef (12.11.18-1) ...
+==> default: Setting up chef (12.11.18-1) ...
+==> default: Thank you for installing Chef!
+==> default: Configuring cache buckets...
+==> default: Running provisioner: chef_solo...
+==> default: Detected Chef (latest) is already installed
+==> default: Generating chef JSON and uploading...
+==> default: Running chef-solo...
+==> default: stdin: is not a tty
+==> default: [2016-06-17T04:23:05+00:00] INFO: Started chef-zero at chefzero://localhost:8889 with repository at /tmp/vagrant-chef/21ffe8cc64f1e650e69e1560eb788fa1
+==> default:   One version per cookbook
+==> default: [2016-06-17T04:23:05+00:00] INFO: Forking chef instance to converge...
+==> default: Starting Chef Client, version 12.11.18
+==> default: [2016-06-17T04:23:05+00:00] INFO: *** Chef 12.11.18 ***
+==> default: [2016-06-17T04:23:05+00:00] INFO: Platform: x86_64-linux
+==> default: [2016-06-17T04:23:05+00:00] INFO: Chef-client pid: 2080
+==> default: [2016-06-17T04:23:07+00:00] INFO: GET /organizations/chef/nodes/vagrant-8bc1c24d
+==> default: [2016-06-17T04:23:07+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Object not found: chefzero://localhost:8889/nodes/vagrant-8bc1c24d>
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:91:in `rescue in get_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:83:in `get_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_object_endpoint.rb:18:in `get'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:305:in `block in send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:336:in `block in retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:299:in `send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:144:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:111:in `get'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:604:in `load'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:588:in `find_or_create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:467:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:269:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:286:in `block in fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:239:in `block in run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:227:in `run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:456:in `sleep_then_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:443:in `block in interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:426:in `run_application'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:59:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/solo.rb:217:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/bin/chef-solo:25:in `<top (required)>'
+==> default: /usr/bin/chef-solo:52:in `load'
+==> default: /usr/bin/chef-solo:52:in `<main>'
+==> default: [2016-06-17T04:23:07+00:00] INFO: HTTP Request Returned 404 Not Found: Object not found: chefzero://localhost:8889/nodes/vagrant-8bc1c24d
+==> default: [2016-06-17T04:23:07+00:00] INFO: POST /organizations/chef/nodes
+==> default: --- POST BODY ---
+==> default: {"name":"vagrant-8bc1c24d","chef_environment":"_default","json_class":"Chef::Node","automatic":{},"normal":{},"chef_type":"node","default":{},"override":{},"run_list":[]}
+==> default: --- END POST BODY ---
+==> default: [2016-06-17T04:23:07+00:00] INFO: #<ChefZero::RestErrorResponse: 404: Parent not found: chefzero://localhost:8889/nodes>
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:187:in `rescue in create_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:181:in `create_data'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/rest_list_endpoint.rb:31:in `post'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/endpoints/nodes_endpoint.rb:24:in `post'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_base.rb:62:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/rest_router.rb:24:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:664:in `block in app'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `call'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/server.rb:336:in `handle_socketless_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:87:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-zero-4.6.2/lib/chef_zero/socketless_server_map.rb:33:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http/socketless_chef_zero_client.rb:154:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:305:in `block in send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:336:in `block in retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:334:in `retrying_http_errors'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:299:in `send_http_request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:144:in `request'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/http.rb:127:in `post'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:639:in `create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:592:in `rescue in find_or_create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/node.rb:588:in `find_or_create'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/policy_builder/dynamic.rb:72:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:467:in `load_node'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/client.rb:269:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:286:in `block in fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:274:in `fork_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:239:in `block in run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/local_mode.rb:44:in `with_server_connectivity'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:227:in `run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:456:in `sleep_then_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:443:in `block in interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `loop'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:442:in `interval_run_chef_client'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/client.rb:426:in `run_application'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application.rb:59:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/lib/chef/application/solo.rb:217:in `run'
+==> default: /opt/chef/embedded/lib/ruby/gems/2.1.0/gems/chef-12.11.18/bin/chef-solo:25:in `<top (required)>'
+==> default: /usr/bin/chef-solo:52:in `load'
+==> default: /usr/bin/chef-solo:52:in `<main>'
+==> default: [2016-06-17T04:23:07+00:00] INFO: HTTP Request Returned 404 Not Found: Parent not found: chefzero://localhost:8889/nodes
+==> default: 
+==> default: ================================================================================
+==> default: Chef encountered an error attempting to load the node data for "vagrant-8bc1c24d"
+==> default: ================================================================================
+==> default: 
+==> default: 
+==> default: Resource Not Found:
+==> default: -------------------
+==> default: The server returned a HTTP 404. This usually indicates that your chef_server_url is incorrect.
+==> default: 
+==> default: 
+==> default: 
+==> default: Relevant Config Settings:
+==> default: -------------------------
+==> default: chef_server_url "chefzero://localhost:8889"
+==> default: 
+==> default: 
+==> default: 
+==> default: Platform:
+==> default: ---------
+==> default: x86_64-linux
+==> default: 
+==> default: 
+==> default: 
+==> default: Running handlers:
+==> default: [2016-06-17T04:23:07+00:00] ERROR: Running exception handlers
+==> default: Running handlers complete
+==> default: 
+==> default: [2016-06-17T04:23:07+00:00] ERROR: Exception handlers complete
+==> default: Chef Client failed. 0 resources updated in 01 seconds
+==> default: [2016-06-17T04:23:07+00:00] FATAL: Stacktrace dumped to /var/chef/cache/chef-stacktrace.out
+==> default: [2016-06-17T04:23:07+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+==> default: [2016-06-17T04:23:07+00:00] ERROR: 404 "Not Found"
+==> default: [2016-06-17T04:23:07+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+Chef never successfully completed! Any errors should be visible in the
+output above. Please fix your recipes so that they properly complete.
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ # 
+cd '/Users/demo/pdev/tmp/myface/'
+# 
+cd '/Users/demo/pdev/tmp/myface/'
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ 
+#+END_SRC
+
+** 
+*** 
+
+http://stackoverflow.com/a/28094532/1495086
+
+sudo gem uninstall chef chef-zero berkshelf knife-solo
+# open ~/Downloads/chefdk-0.14.25-1.dmg
+sudo installer -target / -pkg ~/Downloads/chefdk-0.14.25-1.pkg
+
+gem list 
+gem list | grep chef chef-zero berkshelf knife-solo
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+vagrant plugin list
+which gem
+
+*** 
+
+. ~/.alias
+. ~/.bash_profile
+# 
+cd '/Users/demo/Downloads/'
+which gem bundle
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+sudo gem uninstall chef chef-zero berkshelf knife-solo
+export PATH=/opt/chefdk/embedded/bin:$PATH
+# 
+cd '/Users/demo/pdev/tmp/myface/'
+which gem bundle
+bundle install
+vagrant up
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+sudo gem uninstall berkshelf --version 4.3.5
+bundle install
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+sudo gem uninstall berkshelf --version 4.3.5
+vagrant up
+bundle install
+which bundle
+vagrant up
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+chef --version
+sudo gem uninstall chef-config --version 12.11.18
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+sudo gem uninstall berkshelf --version 4.3.5
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+vagrant up
+which gem bundle
+/opt/chefdk/embedded/bin/gem list
+gem list | grep -E 'chef|chef-zero|berkshelf|knife-solo'
+vagrant plugin list
+gem uninstall -i /opt/chefdk/embedded/lib/ruby/gems/2.1.0 json
+sudo gem uninstall -i /opt/chefdk/embedded/lib/ruby/gems/2.1.0 json
+hs up
+vagrant up
+sudo installer -target / -pkg ~/Downloads/chefdk-0.14.25-1.pkg
+ls -la ~/.chefdk
+rm -rf ~/.chefdk
+which bundle
+bundle install
+vagrant plugin list
+# 
+cd '/Users/demo/pdev/tmp/myface/'
+vagrant up
+/opt/chefdk/embedded/bin/berks --version --format json
+export PATH=/opt/chefdk/embedded/bin:$PATH
+/opt/chefdk/embedded/bin/berks --version --format json
+vagrant up
+vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete' | sh -x -
+vagrant up
+which berks
+vagrant --version
+chef exec bundle install
+g s
+g dc
+# 
+cd '/Users/demo/pdev/tmp/myface/'
+g dc Vagrantfile
+g co -- Vagrantfile
+g s
+rm 	graph.png
+g s
+g dc Gemfile
+# 
+cd '/Users/demo/pdev/tmp/myface/'
+g add R*
+g s
+g commit -m t
+g s
+g st
+vagrant up
+rm -rf ~/.chefdk
+chef exec bundle install
+vagrant up
+vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete' | sh -x -
+vagrant up
+export PATH=/opt/chefdk/embedded/bin:$PATH
+vagrant up
+which gem
+hs
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ 
+
+*** 
+
+rubygems.rb activate_bin_path
+vagrant up The stdout and stderr are shown below:
+The following berks command failed to execute: berks version format json
+stderr: find_spec_for_exe can't find gem berkshelf
+from rubygems.rb activate_bin_path berks version format json
+from /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:278:in `activate_bin_path'
+The following berks command failed to execute: berks version format json
+embedded/lib/ruby/site_ruby/2.1.0 `find_spec_for_exe': can't find gem berkshelf
+gem berkshelf Gem::GemNotFoundException
+stderr: `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)
+stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)
+
+#+BEGIN_SRC 
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ export PATH=/opt/chefdk/embedded/bin:$PATH
+export PATH=/opt/chefdk/embedded/bin:$PATH
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ which berks
+which berks
+/opt/chefdk/embedded/bin/berks
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ berks --version
+berks --version
+4.3.3
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ vagrant up
+vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+The following berks command failed to execute:
+
+    /opt/chefdk/embedded/bin/berks --version --format json
+
+The stdout and stderr are shown below:
+
+    stdout: 
+    stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)
+	from /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:278:in `activate_bin_path'
+	from /opt/chefdk/embedded/bin/berks:22:in `<main>'
+
+
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ 
+#+END_SRC
+
+** =/usr/local/bin/berks vendor /Users/demo/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-28642-1bcuh2j-default --berksfile /Users/demo/pdev/tmp/myface/Berksfile=
+
+It appears that you are not using the ChefDK. Please note that Vagrant Berkshelf
+
+#+BEGIN_SRC 
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ chef --version
+chef --version
+Chef Development Kit Version: 0.14.25
+chef-client version: 12.10.24
+berks version: 4.3.3
+kitchen version: 1.8.0
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ vagrant up
+vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Loading Berkshelf datafile...
+==> default: Sharing cookbooks with VM
+==> default: Checking if box 'bento/ubuntu-14.04' is up to date...
+==> default: Updating Vagrant's Berkshelf...
+The following berks command failed to execute:
+
+    /usr/local/bin/berks vendor /Users/demo/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-28642-1bcuh2j-default --berksfile /Users/demo/pdev/tmp/myface/Berksfile
+
+The stdout and stderr are shown below:
+
+    stdout: 
+    stderr: /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:43:in `initialize': No such file or directory @ rb_sysopen - /Users/demo/pdev/tmp/myface/.#Vagrantfile (Errno::ENOENT)
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:43:in `open'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:43:in `checksum_file'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:33:in `generate_md5_checksum_for_file'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:16:in `md5_checksum_for_file'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:16:in `checksum'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:160:in `file_metadata'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:273:in `block (2 levels) in load_root'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:269:in `each'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:269:in `block in load_root'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:268:in `tap'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:268:in `load_root'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:264:in `load_files'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:93:in `initialize'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:47:in `new'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:47:in `from_path'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/locations/path.rb:21:in `cached_cookbook'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/dependency.rb:126:in `cached_cookbook'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/lockfile.rb:435:in `block in reduce!'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/lockfile.rb:416:in `each'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/lockfile.rb:416:in `reduce!'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/installer.rb:32:in `run'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/berksfile.rb:421:in `install'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/berksfile.rb:630:in `block in vendor'
+	from /opt/chefdk/embedded/lib/ruby/2.1.0/tmpdir.rb:88:in `mktmpdir'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/berksfile.rb:628:in `vendor'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/cli.rb:391:in `vendor'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/cli.rb:52:in `dispatch'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/cli.rb:27:in `execute!'
+	from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/bin/berks:5:in `<top (required)>'
+	from /usr/local/bin/berks:49:in `load'
+	from /usr/local/bin/berks:49:in `<main>'
+
+
+It appears that you are not using the ChefDK. Please note that Vagrant Berkshelf
+works best when used with the ChefDK, and other installation methods are not
+officially supported.
+
+Please download and install the latest version of the ChefDK from:
+
+    https://downloads.chef.io/chef-dk
+
+and follow the installation instructions. Do not forget to add the ChefDK to
+your PATH.
+
+
+[demo@demos-MacBook-Pro:~/pdev/tmp/myface(master)]$ 
+#+END_SRC
+* On Ubuntu
+** =chef --version=
+
+#+BEGIN_SRC
+[root@ub4:~(master)]$ chef --version
+Chef Development Kit Version: 0.15.11
+chef-client version: 12.11.18
+delivery version: 0.0.21 (ac20936d710296b8a9627089a54156d26d66555d)
+berks version: 4.3.3
+kitchen version: 1.9.2
+[root@ub4:~(master)]$
+#+END_SRC
+
+** =stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)=
+
+With this
+#+BEGIN_SRC
+[root@ub4:~(master)]$ g dc
+diff --git a/.bashrc b/.bashrc
+index 06e8536..2264eb7 100755
+--- a/.bashrc
++++ b/.bashrc
+@@ -496,3 +496,6 @@ export COLUMNS=72 #man pages
+
+ export PATH=/usr/local/bin:$PATH
+ export PATH=.:$PATH
++
++
++export PATH="/opt/chefdk/embedded/bin:${HOME}/.chefdk/gem/ruby/2.1.0/bin:$PATH"
+[root@ub4:~(master)]$
+
+#+END_SRC
+
+I get this
+#+BEGIN_SRC
+[root@ub4:~/pdev/tmp/myface(master)]$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+The following berks command failed to execute:
+
+    /opt/chefdk/embedded/bin/berks --version --format json
+
+The stdout and stderr are shown below:
+
+    stdout:
+    stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)
+        from /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:278:in `activate_bin_path'
+        from /opt/chefdk/embedded/bin/berks:22:in `<main>'
+
+
+[root@ub4:~/pdev/tmp/myface(master)]$
+#+END_SRC
+
+** =stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)=
+
+#+BEGIN_SRC
+[root@ub4:~/pdev/tmp/myface(master)]$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+The following berks command failed to execute:
+
+    /opt/chefdk/embedded/bin/berks --version --format json
+
+The stdout and stderr are shown below:
+
+    stdout:
+    stderr: /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:250:in `find_spec_for_exe': can't find gem berkshelf (>= 0.a) (Gem::GemNotFoundException)
+        from /opt/chefdk/embedded/lib/ruby/site_ruby/2.1.0/rubygems.rb:278:in `activate_bin_path'
+        from /opt/chefdk/embedded/bin/berks:22:in `<main>'
+
+[root@ub4:~/pdev/tmp/myface(master)]$
+#+END_SRC** =/usr/bin/berks vendor /root/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-16767-152epnt-default --berksfile /root/pdev/tmp/myface/Berksfile=
+
+Removing this
+#+BEGIN_SRC
+export PATH="/opt/chefdk/embedded/bin:${HOME}/.chefdk/gem/ruby/2.1.0/bin:$PATH"
+#+END_SRC
+
+I get this:
+#+BEGIN_SRC
+The following berks command failed to execute:
+
+    /usr/bin/berks vendor /root/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-16767-152epnt-default --berksfile /root/pdev/tmp/myface/Berksfile
+#+END_SRC
+
+
+#+BEGIN_SRC
+[root@ub4:~/pdev/tmp/myface(master)]$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+    default: The Berkshelf shelf is at "/root/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-16767-152epnt-default"
+==> default: Sharing cookbooks with VM
+==> default: Importing base box 'bento/ubuntu-14.04'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'bento/ubuntu-14.04' is up to date...
+==> default: Setting the name of the VM: myface_default_1466132317870_37180
+==> default: Updating Vagrant's Berkshelf...
+The following berks command failed to execute:
+
+    /usr/bin/berks vendor /root/.berkshelf/vagrant-berkshelf/shelves/berkshelf20160616-16767-152epnt-default --berksfile /root/pdev/tmp/myface/Berksfile
+
+The stdout and stderr are shown below:
+
+    stdout:
+    stderr: /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:43:in `initialize': No such file or directory @ rb_sysopen - /root/pdev/tmp/myface/.#Vagrantfile (Errno::ENOENT)
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:43:in `open'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:43:in `checksum_file'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:33:in `generate_md5_checksum_for_file'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/digester.rb:16:in `md5_checksum_for_file'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:16:in `checksum'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:160:in `file_metadata'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:273:in `block (2 levels) in load_root'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:269:in `each'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:269:in `block in load_root'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:268:in `tap'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:268:in `load_root'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:264:in `load_files'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:93:in `initialize'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:47:in `new'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/ridley-4.5.1/lib/ridley/chef/cookbook.rb:47:in `from_path'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/locations/path.rb:21:in `cached_cookbook'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/dependency.rb:126:in `cached_cookbook'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/lockfile.rb:435:in `block in reduce!'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/lockfile.rb:416:in `each'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/lockfile.rb:416:in `reduce!'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/installer.rb:32:in `run'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/berksfile.rb:421:in `install'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/berksfile.rb:630:in `block in vendor'
+        from /opt/chefdk/embedded/lib/ruby/2.1.0/tmpdir.rb:88:in `mktmpdir'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/berksfile.rb:628:in `vendor'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/cli.rb:391:in `vendor'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/command.rb:27:in `run'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/invocation.rb:126:in `invoke_command'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor.rb:359:in `dispatch'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/cli.rb:52:in `dispatch'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/thor-0.19.1/lib/thor/base.rb:440:in `start'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/lib/berkshelf/cli.rb:27:in `execute!'
+        from /opt/chefdk/embedded/lib/ruby/gems/2.1.0/gems/berkshelf-4.3.3/bin/berks:5:in `<top (required)>'
+        from /usr/bin/berks:44:in `load'
+        from /usr/bin/berks:44:in `<main>'
+
+
+It appears that you are not using the ChefDK. Please note that Vagrant Berkshelf
+works best when used with the ChefDK, and other installation methods are not
+officially supported.
+
+Please download and install the latest version of the ChefDK from:
+
+    https://downloads.chef.io/chef-dk
+
+and follow the installation instructions. Do not forget to add the ChefDK to
+your PATH.
+
+
+[root@ub4:~/pdev/tmp/myface(master)]$
+#+END_SRC
+
