@@ -5,7 +5,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if Vagrant.has_plugin?("vagrant-omnibus")
     config.omnibus.chef_version = 'latest'
   end
-  config.vm.box = 'chef/ubuntu-14.04'
+
+  config.vm.box = 'bento/ubuntu-14.04'
   config.vm.network :private_network, type: 'dhcp'
   config.berkshelf.enabled = true
   config.vm.provision :chef_solo do |chef|
