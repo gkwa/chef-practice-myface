@@ -2,6 +2,15 @@
 
 http://misheska.com/blog/2013/06/16/getting-started-writing-chef-cookbooks-the-berkshelf-way/#getting-started
 
+** this fixes it
+
+http://berkshelf.com/
+
+# order is important here:
+berks install
+export PATH="/opt/chefdk/embedded/bin:${HOME}/.chefdk/gem/ruby/2.1.0/bin:$PATH"
+export PATH=$HOME/.chefdk/gem/ruby/2.1.0/bin:/opt/chefdk/bin:$PATH
+
 ** Vagrant: * Unknown configuration section 'berkshelf'.
 
 vagrant plugin install vagrant-berkshelf
