@@ -2,6 +2,7 @@ VAGRANTFILE_API_VERSION = '2'
 Vagrant.require_version '>= 1.5.0'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'myface-berkshelf'
+  config.berkshelf.enabled = true
   if Vagrant.has_plugin?("vagrant-omnibus")
     config.omnibus.chef_version = '12.10.24'
   end
