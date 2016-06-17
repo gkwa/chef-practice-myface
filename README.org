@@ -2,9 +2,180 @@
 
 http://misheska.com/blog/2013/06/16/getting-started-writing-chef-cookbooks-the-berkshelf-way/#getting-started
 
-** 
+** try chef_zero provisioner instead of chef_solo
 
+https://www.vagrantup.com/docs/provisioning/chef_zero.html
+
+chef_zero provisioner requires nodes_path
+https://github.com/mitchellh/vagrant/issues/6972
+
+
+
+
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ vagrant destroy -f; vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete' | sh -x ; vagrant up
+There are errors in the configuration of this machine. Please fix
+the following errors and try again:
+
+chef zero provisioner:
+ * Missing required value for `chef.nodes_path'.
+
+
++ vboxmanage controlvm ba44809d-a3c8-4930-b023-9b953669e566 poweroff
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
++ vboxmanage unregistervm ba44809d-a3c8-4930-b023-9b953669e566 --delete
+0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
+Bringing machine 'default' up with 'virtualbox' provider...
+There are errors in the configuration of this machine. Please fix
+the following errors and try again:
+
+chef zero provisioner:
+ * Missing required value for `chef.nodes_path'.
+
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ vagrant destroy -f; vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete' | sh -x ; vagrant up   
+   
+** 
+   
+   [root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ vagrant destroy -f; vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete' | sh -x ; vagrant up
+   ==> default: Forcing shutdown of VM...
+   ==> default: Destroying VM and associated drives...
+   Bringing machine 'default' up with 'virtualbox' provider...
+   ==> default: Importing base box 'bento/ubuntu-14.04'...
+   ==> default: Matching MAC address for NAT networking...
+   ==> default: Checking if box 'bento/ubuntu-14.04' is up to date...
+   ==> default: Setting the name of the VM: chef-practice-myface_default_1466190443787_20444
+   ==> default: Auto-generating node name for Chef...
+   ==> default: The cookbook path '/root/pdev/tmp/chef-practice-myface/cookbooks' doesn't exist. Ignoring...
+   ==> default: Clearing any previously set network interfaces...
+   ==> default: Preparing network interfaces based on configuration...
+   default: Adapter 1: nat
+   default: Adapter 2: hostonly
+   ==> default: Forwarding ports...
+   default: 22 (guest) => 2222 (host) (adapter 1)
+   ==> default: Booting VM...
+   ==> default: Waiting for machine to boot. This may take a few minutes...
+   default: SSH address: 127.0.0.1:2222
+   default: SSH username: vagrant
+   default: SSH auth method: private key
+   default:
+   default: Vagrant insecure key detected. Vagrant will automatically replace
+   default: this with a newly generated keypair for better security.
+   default:
+   default: Inserting generated public key within guest...
+   default: Removing insecure key from the guest if it's present...
+   default: Key inserted! Disconnecting and reconnecting using new SSH key...
+   ==> default: Machine booted and ready!
+   ==> default: Checking for guest additions in VM...
+   default: The guest additions on this VM do not match the installed version of
+   default: VirtualBox! In most cases this is fine, but in rare cases it can
+   default: prevent things such as shared folders from working properly. If you see
+   default: shared folder errors, please make sure the guest additions within the
+   default: virtual machine match the version of VirtualBox you have installed on
+   default: your host and reload your VM.
+   default:
+   default: Guest Additions Version: 5.0.20
+   default: VirtualBox Version: 4.3
+   ==> default: Setting hostname...
+   ==> default: Configuring and enabling network interfaces...
+   ==> default: Mounting shared folders...
+   default: /vagrant => /root/pdev/tmp/chef-practice-myface
+   ==> default: Installing Chef 12.10.24 Omnibus package...
+   ==> default: ubuntu 14.04 x86_64
+   ==> default: Getting information for chef stable 12.10.24 for ubuntu...
+   ==> default: downloading https://omnitruck-direct.chef.io/stable/chef/metadata?v=12.10.24&p=ubuntu&pv=14.04&m=x86_64
+   ==> default:   to file /tmp/install.sh.1578/metadata.txt
+   ==> default: trying wget...
+   ==> default: sha1       7d30b300f95f00036919ee8bf3b95ab73429e57e
+   ==> default: sha256     663d6c42c90bbb9463bc02a7c5d777f7aa6ebd52c071a0c1963bc8c4db76dea2
+   ==> default: url        https://packages.chef.io/stable/ubuntu/14.04/chef_12.10.24-1_amd64.deb
+   ==> default: version    12.10.24
+   
+   ==> default: downloaded metadata file looks valid...
+   ==> default: downloading https://packages.chef.io/stable/ubuntu/14.04/chef_12.10.24-1_amd64.deb
+   ==> default:   to file /tmp/install.sh.1578/chef_12.10.24-1_amd64.deb
+   ==> default: trying wget...
+   ==> default: Comparing checksum with sha256sum...
+   ==> default: Installing chef 12.10.24
+   ==> default: installing with dpkg...
+   ==> default: Selecting previously unselected package chef.
+   ==> default: (Reading database ... 32948 files and directories currently installed.)
+   ==> default: Preparing to unpack .../chef_12.10.24-1_amd64.deb ...
+   ==> default: Unpacking chef (12.10.24-1) ...
+   ==> default: Setting up chef (12.10.24-1) ...
+   ==> default: Thank you for installing Chef!
+   ==> default: Running provisioner: chef_solo...
+   ==> default: Detected Chef (12.10.24) is already installed
+   ==> default: Generating chef JSON and uploading...
+   ==> default: Running chef-solo...
+   ==> default: stdin: is not a tty
+   ==> default: [2016-06-17T19:08:51+00:00] INFO: Forking chef instance to converge...
+   ==> default: Starting Chef Client, version 12.10.24
+   ==> default: [2016-06-17T19:08:51+00:00] INFO: *** Chef 12.10.24 ***
+   ==> default: [2016-06-17T19:08:51+00:00] INFO: Platform: x86_64-linux
+   ==> default: [2016-06-17T19:08:51+00:00] INFO: Chef-client pid: 1748
+   ==> default: [2016-06-17T19:08:53+00:00] INFO: Setting the run_list to ["recipe[myface::default]"] from CLI options
+   ==> default: [2016-06-17T19:08:53+00:00] INFO: Run List is [recipe[myface::default]]
+   ==> default: [2016-06-17T19:08:53+00:00] INFO: Run List expands to [myface::default]
+   ==> default: [2016-06-17T19:08:53+00:00] INFO: Starting Chef Run for vagrant-e76533bc
+   ==> default: [2016-06-17T19:08:53+00:00] INFO: Running start handlers
+   ==> default: [2016-06-17T19:08:53+00:00] INFO: Start handlers complete.
+   ==> default: Installing Cookbook Gems:
+   ==> default: Compiling Cookbooks...
+   ==> default:
+   ==> default: Running handlers:
+   ==> default: [2016-06-17T19:08:53+00:00] ERROR: Running exception handlers
+   ==> default: Running handlers complete
+   ==> default:
+   ==> default: [2016-06-17T19:08:53+00:00] ERROR: Exception handlers complete
+   ==> default: Chef Client failed. 0 resources updated in 02 seconds
+   ==> default: [2016-06-17T19:08:53+00:00] FATAL: Stacktrace dumped to /var/chef/cache/chef-stacktrace.out
+   ==> default: [2016-06-17T19:08:53+00:00] FATAL: Please provide the contents of the stacktrace.out file if you file a bug report
+   ==> default: [2016-06-17T19:08:53+00:00] ERROR: Cookbook myface not found. If you're loading myface from another cookbook, make sure you configure the dependency in your metadata
+   ==> default: [2016-06-17T19:08:53+00:00] FATAL: Chef::Exceptions::ChildConvergeError: Chef run process exited unsuccessfully (exit code 1)
+Chef never successfully completed! Any errors should be visible in the
+output above. Please fix your recipes so that they properly complete.
+[root@ub4:~/pdev/tmp/chef-practice-myface(master)]$
+
+** chef_server_url "chefzero://localhost:8889"
+
+http://stackoverflow.com/a/37468310/1495086
 chef_server_url "chefzero://localhost:8889"
+
+This fixes it:
+
+[demo@demos-MacBook-Pro:~/pdev/TaylorMonacelli/chef-practice-myface(master)]$ g sc
+commit 8a27cdb
+Author: Taylor Monacelli <taylor.monacelli@streambox.com>
+Date:   Fri Jun 17 12:07:00 2016 -0700
+
+    Revert "Revert "Pin chef to 12.10.24 instead of latest""
+    
+    This reverts commit 5f64634d8d065088fded91445634a6f7d5c376f3.
+
+diff --git a/Vagrantfile b/Vagrantfile
+index 1c3bc77..2f5a7d6 100644
+--- a/Vagrantfile
++++ b/Vagrantfile
+@@ -3,7 +3,7 @@ Vagrant.require_version '>= 1.5.0'
+ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+   config.vm.hostname = 'myface-berkshelf'
+   if Vagrant.has_plugin?("vagrant-omnibus")
+-    config.omnibus.chef_version = 'latest'
++    config.omnibus.chef_version = '12.10.24'
+   end
+ 
+   # Don't keep reinstalling virtualbox guest additions, it takes too
+@@ -16,6 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+   config.vm.box = 'bento/ubuntu-14.04'
+   config.vm.network :private_network, type: 'dhcp'
+   config.vm.provision :chef_solo do |chef|
++    chef.version = '12.10.24'
+     chef.json = {
+       mysql: {
+         server_root_password: 'rootpass',
+[demo@demos-MacBook-Pro:~/pdev/TaylorMonacelli/chef-practice-myface(master)]$ 
+
+*** log
 
 [root@ub4:~/pdev/tmp/chef-practice-myface(master)]$ vagrant destroy -f; vboxmanage list vms | ack '{(.*)}' ack --output='vboxmanage controlvm $1 poweroff; vboxmanage unregistervm $1 --delete' | sh -x ; vagrant up
 ==> default: Forcing shutdown of VM...

@@ -15,7 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = 'bento/ubuntu-14.04'
   config.vm.network :private_network, type: 'dhcp'
-  config.vm.provision :chef_solo do |chef|
+  config.vm.provision :chef_zero do |chef|
+    chef.nodes_path = "./nodes"
     chef.version = '12.10.24'
     chef.json = {
       mysql: {
