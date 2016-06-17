@@ -8,7 +8,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = 'bento/ubuntu-14.04'
   config.vm.network :private_network, type: 'dhcp'
-  config.berkshelf.enabled = true
   config.vm.provision :chef_solo do |chef|
     chef.json = {
       mysql: {
