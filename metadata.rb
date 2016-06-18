@@ -5,3 +5,5 @@ license          'All rights reserved'
 description      'Installs/Configures myface'
 long_description 'Installs/Configures myface'
 version          '0.1.0'
+
+depends 'apache2', '~> 3.2.2'
