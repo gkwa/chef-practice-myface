@@ -29,8 +29,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, type: 'dhcp'
   config.berkshelf.enabled = true
   config.vm.provision :chef_zero do |chef|
-    chef.cookbooks_path = Dir.pwd
-    chef.nodes_path = "./nodes"
+    chef.cookbooks_path = "cookbooks"
+    chef.nodes_path = "nodes"
     chef.version = '12.10.24'
     chef.json = {
       mysql: {
